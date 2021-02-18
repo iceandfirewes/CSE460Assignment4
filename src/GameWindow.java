@@ -28,6 +28,8 @@ public class GameWindow extends JPanel implements KeyListener {
 	
 	private Optional<Missile> missile = Optional.empty();
 	
+	private int score = 0;
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -43,10 +45,13 @@ public class GameWindow extends JPanel implements KeyListener {
 			}
 			
 			this.applyToAliens((alien) -> alien.draw(g));
+			
+			g.setColor(Color.WHITE);
+			g.drawString("Score: " + this.score,  30, 30);
 		} else if (gamestate.equals("gameover")) {
 			g.setColor(Color.WHITE);
-			g.drawString("Game Over", 400, 400);
-			g.drawString("Press r to restart", 400, 500);
+			g.drawString("Game Over", 300, 300);
+			g.drawString("Press r to restart", 300, 400);
 		}
 	}
 	
@@ -85,6 +90,7 @@ public class GameWindow extends JPanel implements KeyListener {
 					if (alien.collidesWithSprite(missile.get())) {
 						alienRow.set(colIndex, Optional.empty());
 						missile = Optional.empty();
+						score += 1;
 						return;
 					}
 				}
@@ -102,6 +108,7 @@ public class GameWindow extends JPanel implements KeyListener {
 	private void setGameState(String gameState) {
 		
 		if (gameState.equals("game")) {
+			this.score = 0;
 			this.bunkers = IntStream.range(0, 3)
 				.map(i -> (800 / 2) + (200 * (i - 1)))
 				.mapToObj(x -> new Bunker(x, 800 - 200))
