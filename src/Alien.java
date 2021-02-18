@@ -27,4 +27,9 @@ public class Alien implements Drawable {
 	public void moveDown() {
 		positionY += 10;
 	}
+	
+	public boolean collidesWithSprite(Sprite sprite) {
+		double distance = Math.pow(sprite.getX() - positionX, 2) + Math.pow(sprite.getY() - positionY, 2);
+		return Math.pow(distance, 1f/2f) < (sprite.getWidth() + 20);
+	}
 }

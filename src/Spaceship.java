@@ -19,5 +19,13 @@ public class Spaceship implements Drawable  {
 	{
 		positionX += 15;
 	}
+	
+	public int getX() {
+		return positionX;
+	}
+	
+	public int getY() {
+		return positionY;
+	}
 
 }
